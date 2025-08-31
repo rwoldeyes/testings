@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SMARTFRESH LAUNDRY LLC</title>
+  <meta name="description" content="Modern coin laundromat — clean, fast, convenient. Self-service, wash & fold, great prices, and friendly staff." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1220;       /* deep navy */
+      --card:#121a2d;     /* card surface */
+      --brand:#2dd4bf;    /* teal */
+      --brand-2:#60a5fa;  /* sky */
+      --text:#e5e7eb;     /* light */
+      --muted:#94a3b8;    /* slate */
+      --ring: rgba(45,212,191,.55);
+      --radius:18px;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background: radial-gradient(1200px 800px at 80% -10%, rgba(96,165,250,.18), transparent 60%), radial-gradient(900px 700px at -10% 10%, rgba(45,212,191,.18), transparent 55%), var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1100px;margin-inline:auto;padding:0 20px}
+
+    /* Topbar */
+    .topbar{position:sticky;top:0;backdrop-filter: blur(10px); background:rgba(11,18,32,.6); border-bottom:1px solid rgba(255,255,255,.06); z-index:50}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .brand .logo{width:100px;height:70px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:0 6px 20px rgba(120,165,250,.45)}
+    .brand .logo svg{fill:#0b1220}
+    .links{display:flex;gap:18px;font-weight:600}
+    .links a{opacity:.9}
+    .links a:hover{opacity:1}
+    .menu-btn{display:none;border:1px solid rgba(255,255,255,.12);background:#1CA9A2;color:var(--text);padding:8px 10px;border-radius:10px}
+
+    /* Hero */
+    .hero{padding:70px 0 40px; position:relative}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+    .title{font-size:44px;line-height:1.05;margin:0 0 10px;font-weight:800}
+    .subtitle{color:var(--muted);font-size:18px;margin:0 0 24px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1220;font-weight:800;border:0;border-radius:14px;padding:14px 18px;box-shadow:0 10px 25px rgba(45,212,191,.25);cursor:pointer}
+    .btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.14);box-shadow:none}
+    .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.12);padding:8px 10px;border-radius:999px;margin-bottom:14px;color:var(--muted)}
+
+    .hero-img{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+    .hero-img img{height:100%;width:100%;object-fit:cover;aspect-ratio:4/3}
+    .glow{position:absolute;inset:auto -20% -20% -20%;height:120px;background:radial-gradient(closest-side, rgba(45,212,191,.35), transparent);filter:blur(30px)}
+
+    /* Sections */
+    section{padding:70px 0}
+    .section-title{font-size:30px;margin:0 0 18px;font-weight:800}
+    .section-sub{color:var(--muted);margin:0 0 22px}
+
+    /* Cards grid */
+    .grid{display:grid;gap:18px}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .card img{height:170px; width:100%; object-fit:cover}
+    .card-body{padding:16px}
+    .price{font-weight:800;font-size:20px}
+    .muted{color:var(--muted)}
+
+    /* Amenities */
+    .amenities{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .tag{background:#0f172a;border:1px solid rgba(255,255,255,.08);padding:10px 12px;border-radius:12px;display:flex;align-items:center;gap:10px}
+
+    /* Location */
+    .map{border:0;width:100%;height:320px;border-radius:var(--radius);box-shadow:var(--shadow)}
+
+    /* Footer */
+    footer{border-top:1px solid rgba(255,255,255,.08);padding:28px 0;color:var(--muted)}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:100}
+    .modal{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;max-width:560px;width:94%;padding:18px;box-shadow:var(--shadow)}
+    .modal h3{margin-top:0}
+    .field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+    .input, .select, .textarea{
+      background:#0f172a;border:1px solid rgba(255,255,255,.14);padding:12px;border-radius:10px;color:var(--text)
+    }
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .close-x{background:transparent;border:0;color:var(--muted);font-size:20px;cursor:pointer}
+    .notice{background:rgba(45,212,191,.08);border:1px solid var(--ring);padding:10px 12px;border-radius:10px;color:#a7f3d0;margin:8px 0}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr 1fr}
+      .amenities{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 640px){
+      .links{display:none}
+      .menu-btn{display:block}
+      .grid-3, .grid-2{grid-template-columns:1fr}
+      .title{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home">
+        <span class="logo" aria-hidden="true">
+          <!--<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3a9 9 0 100 18 9 9 0 000-18Zm0 2a7 7 0 110 14 7 7 0 010-14Zm0 2.2a4.8 4.8 0 100 9.6 4.8 4.8 0 000-9.6Z"/></svg>
+--->   
+		<img src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\IMG_1258.png" alt="Rows of modern washing machines"/>
+		
+	   </span>
+	   <h1>
+        <span>SMARTFRESH LAUNDRY LLC </span>
+		</h1>
+		<h2>
+		 BROADWAY LOCATION
+		</h2>
+      </a>
+      <nav class="links" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#location">Location</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="menu-btn" id="openMenu">Menu</button>
+    </div>
+  </div>
+  
+
+
+  <!-- Hero -->
+  <header id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Clean • Fast • Convenient</span>
+        <h1 class="title">Shiny clothes, stress‑free day.</h1>			
+		
+			</li>
+			<li>Plenty of folding tables</li>
+			<li>Affordable prices on detergent, washing, and drying</li>
+			<li>Payment convenience- Credit card, Debit card or our FREE app.</li>
+			<li>Safe and secure waiting area</li>
+			<li>Vending snacks, beverages, and large-screen TVs</li>
+			<li>Free Wi-Fi</li>
+			<li>Clean restrooms</li>
+		</ul>
+		
+        <p class="subtitle">Modern coin laundromat with high‑efficiency washers & speedy dryers. Self‑service, wash & fold, and friendly staff ready to help.</p>
+        <div class="cta">
+          <button class="btn" id="bookNow">Book Wash & Fold</button>
+          <a class="btn secondary" href="#pricing">See Prices</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1259.png.jpg"alt="Modern laundromat interior with washers and dryers" />
+        
+		
+		<div class="glow" aria-hidden="true"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Services -->
+  <title>Laundromat Services</title>
+ 
+  <section id="Laundromat Services">
+    <div class="container">
+      <h2 class="section-title">Our Laundromat Services</h2>
+      <p class="section-sub">Everything you need for fast, fresh laundry.</p>
+      <div class="grid grid-3">
+        <article class="card">
+          <img src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1260.png.jpg" alt="Rows of modern washing machines"/>
+          <div class="card-body">
+			
+			<!-- Equipment Section -->		  
+			<h2>Equipment</h2>
+			<p>
+			  We use high-efficiency <span class="highlight">Dexter</span> washers and dryers, 
+			  designed for speed, reliability, and energy savings — giving you a faster, cleaner wash.
+			</p>
+			<a href="#" class="cta">See Our Machines</a>
+		  </div>
+          
+        </article>
+        <article class="card">
+           <img src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1262.png" alt="Clean shirts on hangers"/>
+          <div class="card-body">
+					
+					<!-- Wash Section -->		  
+			<h2>Wash</h2>
+			<p>
+			  Our laundromat features multiple <span class="highlight">large-capacity machines</span> 
+			  that can handle everything from everyday laundry to oversized household items 
+			  such as comforters, blankets, and rugs.
+			</p>	
+		     <a href="#" class="cta">Start Washing</a>
+			
+          </div>
+        </article>
+        <article class="card">
+          <img src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1265.png" alt="Clean shirts on hangers"/>
+          <div class="card-body">
+					
+					<!-- Dry Section -->
+		  <!--<div class="section" style="background:#ffffff;"> -->
+			<h2>Dry</h2>
+			<p>
+			  Our powerful <span class="highlight">high-capacity dryers</span> are built to dry your clothes quickly 
+			  and evenly — from everyday laundry to bulky items like blankets and comforters. 
+			  Get warm, fresh, and ready-to-fold laundry every time.
+			</p>
+			<a href="#" class="cta">Start Drying</a>
+		  </div>
+         
+        </article>
+      </div>
+
+      <div class="amenities" style="margin-top:16px">
+        <div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V6z"/></svg> Free Wi‑Fi</div>
+        <div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l-10-5v11l10 5 10-5V6l-10 5z"/></svg> Vending & Seating</div>
+        <div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2 2 0 01-2-2v-7H7l5-9 5 9h-3v7a2 2 0 01-2 2z"/></svg> Parking</div>
+        <div class="tag"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 5h-2v6h6v-2h-4V8z"/></svg> 7 AM – 10 PM</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">Pricing</h2>
+      <p class="section-sub">Transparent rates. Bulk discounts available.</p>
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="card-body">
+            <h3>Wash</h3>
+            <p class="muted">Per load</p>
+            <p class="price">$13.50, $9.00, $6.75 , $3.75,$18.00</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Dry</h3>
+            <p class="muted">Per 30 minutes</p>
+            <p class="price">$4.50, $2.75</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-body">
+            <h3>Wash & Fold</h3>
+            <p class="muted">Per pound</p>
+            <p class="price">$4.25</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="container">
+      <h2 class="section-title">Gallery</h2>
+      <p class="section-sub">Bright, clean, and welcoming.</p>
+      <div class="grid grid-3">
+        <img class="card" src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1261.png" alt="Washer closeup" />
+        <img class="card" src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1261.png" alt="Dryer drum" />
+        <img class="card" src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1261.png" alt="Folding table" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Location & Hours -->
+  <section id="location">
+    <div class="container">
+      <h2 class="section-title">Find Us</h2>
+	  
+	      
+      <p class="section-sub">914 W Broadway Ave, Minneapolis, MN 55411. <br /> Open 7 Days a Week
+				7:00AM &ndash; 10:00PM Including ALL Holidays!</p>
+      <iframe class="map" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509374!2d144.95373631531586!3d-37.8162791797517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ5JzAyLjYiUyAxNDTCsDU3JzEzLjQiRQ!5e0!3m2!1sen!2sus!4v1700000000000"></iframe>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-body">
+            <h3>Say hello</h3>
+            <p class="muted">Call (763) 614‑0505 • Email smartfreshlaundry1@gmail.com </p>
+            <p class="muted">For quick questions, use the form. For bookings, use the "Book Wash & Fold" button.</p>
+            <form id="contactForm" novalidate>
+              <div class="field"><label for="name">Name</label><input id="name" class="input" required placeholder="Your name" /></div>
+              <div class="row">
+                <div class="field"><label for="email">Email</label><input id="email" class="input" type="email" required placeholder="you@example.com"/></div>
+                <div class="field"><label for="phone">Phone</label><input id="phone" class="input" inputmode="tel" placeholder="(123) 456‑7890"/></div>
+              </div>
+              <div class="field"><label for="message">Message</label><textarea id="message" class="textarea" rows="4" required placeholder="How can we help?"></textarea></div>
+              <button class="btn" type="submit">Send Message</button>
+              <p id="contactNotice" class="notice" style="display:none">Thanks! We'll get back to you shortly.</p>
+            </form>
+          </div>
+        </div>
+        <div class="card">
+          <img src="C:\Users\hailu\OneDrive\Desktop\webcite\IMG\1260.png.jpg" alt="Laundry room"/>
+				
+		<p>
+		  Our team is committed to making your laundry experience as easy and efficient as possible. 
+		  From guidance on machine settings to tips for handling large or delicate items, we are here to assist.
+		</p>
+
+		<p>
+		  Cleanliness and safety are our top priorities. We maintain and sanitize all machines regularly, 
+		  ensuring you enjoy a fresh, hygienic laundry environment every visit.
+		</p>
+		<p>
+		  We understand that your time is valuable. That’s why we focus on fast, reliable service 
+		  without compromising the quality of your wash and dry. Convenience and satisfaction are guaranteed.
+		</p>
+
+		<p>
+		  Whether you’re a first-time visitor or a regular customer, we aim to make every laundry trip 
+		  smooth, comfortable, and stress-free. Your satisfaction is our ultimate goal.
+		</p>        </div>
+      </div>
+	  
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> SMARTFRESH LAUNDRY LLC • All rights reserved.</div>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div class="modal-backdrop" id="bookingBackdrop" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="bookingTitle">Book Wash & Fold</h3>
+        <button class="close-x" id="closeBooking" aria-label="Close">✕</button>
+      </div>
+      <p class="muted" style="margin-top:-2px">Fill out this quick form and we'll confirm your booking.</p>
+      <form id="bookingForm" novalidate>
+        <div class="row">
+          <div class="field"><label for="bname">Full Name</label><input id="bname" class="input" required /></div>
+          <div class="field"><label for="bphone">Phone</label><input id="bphone" class="input" inputmode="tel" required /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="bemail">Email</label><input id="bemail" type="email" class="input" required /></div>
+          <div class="field"><label for="bdate">Preferred Date</label><input id="bdate" type="date" class="input" required /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="btime">Preferred Time</label><input id="btime" type="time" class="input" required /></div>
+          <div class="field"><label for="bservice">Service</label>
+            <select id="bservice" class="select" required>
+              <option value="">Select…</option>
+              <option>Wash & Fold</option>
+              <option>Self‑Service Help</option>
+              <option>Pickup & Delivery</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="bnotes">Notes (optional)</label><textarea id="bnotes" class="textarea" rows="3" placeholder="Gate code, parking, special instructions…"></textarea></div>
+        <button class="btn" type="submit">Request Booking</button>
+        <p id="bookingNotice" class="notice" style="display:none">Request received! A confirmation will be sent to your email.</p>
+        <p class="muted" style="font-size:13px">Tip: To send real emails, replace this demo with Formspree or EmailJS (instructions in JS).</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu (basic: scroll to top links)
+    document.getElementById('openMenu').addEventListener('click', () => {
+      const links = document.querySelector('.links');
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Booking modal
+    const openBtn = document.getElementById('bookNow');
+    const backdrop = document.getElementById('bookingBackdrop');
+    const closeBtn = document.getElementById('closeBooking');
+    openBtn.addEventListener('click', ()=> { backdrop.style.display = 'flex'; document.body.style.overflow='hidden'; });
+    closeBtn.addEventListener('click', ()=> { backdrop.style.display = 'none'; document.body.style.overflow=''; });
+    backdrop.addEventListener('click', (e)=> { if(e.target === backdrop){ closeBtn.click(); } });
+
+    // Contact form (demo only)
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const ok = contactForm.checkValidity();
+      if(!ok){ contactForm.reportValidity(); return; }
+      // DEMO: show notice; for real email use Formspree (see below)
+      document.getElementById('contactNotice').style.display = 'block';
+      contactForm.reset();
+    });
+
+    // Booking form (demo only)
+    const bookingForm = document.getElementById('bookingForm');
+    bookingForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const ok = bookingForm.checkValidity();
+      if(!ok){ bookingForm.reportValidity(); return; }
+      const data = {
+        name: document.getElementById('bname').value,
+        phone: document.getElementById('bphone').value,
+        email: document.getElementById('bemail').value,
+        date: document.getElementById('bdate').value,
+        time: document.getElementById('btime').value,
+        service: document.getElementById('bservice').value,
+        notes: document.getElementById('bnotes').value
+      };
+      // Save to localStorage (owner can read later)
+      const list = JSON.parse(localStorage.getItem('laundro_bookings')||'[]');
+      list.push({ ...data, createdAt: new Date().toISOString() });
+      localStorage.setItem('laundro_bookings', JSON.stringify(list));
+
+      document.getElementById('bookingNotice').style.display = 'block';
+      bookingForm.reset();
+
+      // === How to send real emails ===
+      // Option A: Formspree (no backend)
+      // 1) Create a free form at https://formspree.io
+      // 2) Replace the bookingForm submit handler with:
+      // fetch('https://formspree.io/f/yourFormId', {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify(data)})
+      // .then(r=>r.ok && alert('Booked! Check your email.'))
+      // .catch(()=> alert('Network error'))
+      // Option B: EmailJS (emailjs.com) — similar idea using their SDK & a template.
+    });
+  </script>
+</body>
+</html>
+	
